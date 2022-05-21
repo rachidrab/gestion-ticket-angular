@@ -1,0 +1,59 @@
+{
+  "changelogDate": "20220521195703",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "dateOuverture",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateCloture",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "TicketStatut",
+      "fieldValues": "EN_COURS,RESOLU"
+    },
+    {
+      "fieldName": "urgence",
+      "fieldType": "TicketUrgence",
+      "fieldValues": "CRITIQUE,URGENT,NORMAL,NON_URGENT"
+    },
+    {
+      "fieldName": "environnement",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Ticket",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "logiciel",
+      "relationshipName": "logiciel",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "ticket",
+      "ownerSide": true,
+      "relationshipName": "developpeur",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "ticket",
+      "ownerSide": true,
+      "relationshipName": "client",
+      "relationshipType": "many-to-one"
+    }
+  ]
+}

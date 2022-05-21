@@ -1,0 +1,148 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ticket-heading" data-cy="TicketCreateUpdateHeading">Create or edit a Ticket</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_dateOuverture">Date Ouverture</label>
+          <div class="input-group">
+            <input
+              id="field_dateOuverture"
+              data-cy="dateOuverture"
+              type="text"
+              class="form-control"
+              name="dateOuverture"
+              ngbDatepicker
+              #dateOuvertureDp="ngbDatepicker"
+              formControlName="dateOuverture"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOuvertureDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_dateCloture">Date Cloture</label>
+          <div class="input-group">
+            <input
+              id="field_dateCloture"
+              data-cy="dateCloture"
+              type="text"
+              class="form-control"
+              name="dateCloture"
+              ngbDatepicker
+              #dateClotureDp="ngbDatepicker"
+              formControlName="dateCloture"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateClotureDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_statut">Statut</label>
+          <select class="form-control" name="statut" formControlName="statut" id="field_statut" data-cy="statut">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let ticketStatut of ticketStatutValues" [value]="ticketStatut">ticketStatut</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_urgence">Urgence</label>
+          <select class="form-control" name="urgence" formControlName="urgence" id="field_urgence" data-cy="urgence">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let ticketUrgence of ticketUrgenceValues" [value]="ticketUrgence">ticketUrgence</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_environnement">Environnement</label>
+          <input
+            type="text"
+            class="form-control"
+            name="environnement"
+            id="field_environnement"
+            data-cy="environnement"
+            formControlName="environnement"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_logiciel">Logiciel</label>
+          <select class="form-control" id="field_logiciel" data-cy="logiciel" name="logiciel" formControlName="logiciel">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="logicielOption.id === editForm.get('logiciel')!.value?.id ? editForm.get('logiciel')!.value : logicielOption"
+              *ngFor="let logicielOption of logicielsSharedCollection; trackBy: trackLogicielById"
+            >
+              {{ logicielOption.nom }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_developpeur">Developpeur</label>
+          <select class="form-control" id="field_developpeur" data-cy="developpeur" name="developpeur" formControlName="developpeur">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('developpeur')!.value?.id ? editForm.get('developpeur')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_client">Client</label>
+          <select class="form-control" id="field_client" data-cy="client" name="client" formControlName="client">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('client')!.value?.id ? editForm.get('client')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
